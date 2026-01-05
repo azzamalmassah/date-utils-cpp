@@ -124,7 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="date_subtract.cpp" />
+    <ClCompile Include="date_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="date_utils.h" />

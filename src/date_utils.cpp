@@ -1,4 +1,5 @@
 #include "date_utils.h"
+#include <string>
 
 bool isLeapYear(int year) {
 	return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
@@ -81,8 +82,8 @@ void decreaseDateByOneYear(sDate& d) {
 }
 
 
-void decreaseDateByXYearsFaster(sDate& d, int yearsToSub) {
-	d.year -= yearsToSub;
+void decreaseDateByXYearsFaster(sDate& d, int years) {
+	d.year -= years;
 	int maxDays = numberOfDaysInMonthsShort(d.year, d.month);
 	if (d.day > maxDays) {
 		d.day = maxDays;
@@ -124,6 +125,119 @@ void decreaseDateByOneCenturyFaster(sDate& d) {
 void decreaseDateByOneMillennium(sDate& d) {
 	decreaseDateByXYearsFaster(d, 1000);
 
+}
+
+// ==========================
+// Date addition (increase)
+// ==========================
+bool isLastDayInMonth(const sDate &d) {
+	return d.day == numberOfDaysInMonthsShort(d.year, d.month);
+}
+
+bool isLastMonthInYear(const sDate& d) {
+	return d.month == 12;
+}
+
+void increaseDateByOneDay(sDate& d) {
+	if (isLastDayInMonth(d)) {
+		if (isLastMonthInYear(d)) {
+			d.year++;
+			d.day = 1;
+			d.month = 1;
+			return;
+		}
+		d.day = 1;
+		d.month++;
+		return;
+	}
+	d.day++;
+	return;
+}
+void increaseDateByXDay( sDate& d,int daysToAdd) {
+	for (int i = 0; i < daysToAdd; i++) {
+		increaseDateByOneDay(d);
+	}
+
+}
+void increaseDateByXWeek(sDate& d1, int weeksToAdd ) {
+	increaseDateByXDay( d1,(7 * weeksToAdd));
+}
+void increaseDateByXMonths(sDate& d, int monthsToAdd ) {
+	d.month = d.month + monthsToAdd;
+	while (d.month > 12) {
+		d.month = d.month - 12;
+		d.year++;
+	}
+	short monthDays = numberOfDaysInMonthsShort(d.year, d.month);
+	if (d.day > monthDays) {
+		d.day = monthDays;
+	}
+
+
+}
+
+
+void increaseDateByXYears(sDate& d, int yearsToAdd ) {
+	d.year = d.year + yearsToAdd;
+	if (d.month == 2 && d.day == 29 && !isLeapYear(d.year)) {
+		d.day = 28;
+	}
+
+}
+
+// ==========================
+// Date queries & calculations
+// ==========================
+int calculateIndex(int day, int month, int year) {
+	short a, y, m;
+	a = (14 - month) / 12;
+	y = year - a;
+	m = month + 12 * a - 2;
+	return (day + y + (y / 4) - (y / 100) + (y / 400) + ((31 * m) / 12)) % 7;
+}
+
+
+std::string dayName(short index) {
+	static std::string days[7] = {
+		"Sunday", "Monday", "Tuesday",
+		"Wednesday", "Thursday", "Friday", "Saturday"
+	};
+	return days[index];
+}
+
+
+bool isWeekEnd(const sDate& d) {
+	//weekends are sat and sun
+	std::string day = dayName(calculateIndex(d.day, d.month, d.year));
+	return  day == "Saturday" || day == "Sunday";
+}
+bool isEndOfWeek(const sDate& d) {
+	return dayName(calculateIndex(d.day, d.month, d.year)) == "Friday";
+}
+bool isBusinessDay(const sDate& d) {
+	return !isWeekEnd(d);
+}
+short daysUntilEndOfWeek(short dayIndex) {
+	if (dayIndex >= 4) {
+		return 0;
+	}
+	return  4 - dayIndex;
+}
+short calcEndWeekDays(const sDate& d) {
+	return daysUntilEndOfWeek(calculateIndex(d.day, d.month, d.year));
+}
+
+short calcEndOfMonth(const sDate& d) {
+	return numberOfDaysInMonthsShort(d.year, d.month) - d.day;
+}
+
+int calcEndOfYear(const sDate& d) {
+	short totalDays = 0;
+
+	for (int i = d.month; i <= 12; i++) {
+		totalDays += numberOfDaysInMonthsShort(d.year, i);
+	}
+	return totalDays - d.day;
 }
 
 

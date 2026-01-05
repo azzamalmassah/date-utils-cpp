@@ -22,6 +22,28 @@ int main()
 	decreaseDateByOneYear(d);
 	std::cout << d.day << "/" << d.month << "/" << d.year << std::endl;
 
+	// Addition tests
+	sDate a{ 28, 2, 2023 };
+	increaseDateByOneDay(a);   // non-leap year
+	std::cout << a.day << "/" << a.month << "/" << a.year << std::endl; // 1/3/2023
+
+	sDate b{ 28, 2, 2024 };
+	increaseDateByOneDay(b);   // leap year
+	std::cout << b.day << "/" << b.month << "/" << b.year << std::endl; // 29/2/2024
+
+	sDate c{ 31, 12, 2024 };
+	increaseDateByOneDay(c);
+	std::cout << c.day << "/" << c.month << "/" << c.year << std::endl; // 1/1/2025
+
+	// QUERYING tests
+	sDate q{ 5, 1, 2026 };
+
+	std::cout << dayName(calculateIndex(q.day, q.month, q.year)) << std::endl;
+	std::cout << isWeekEnd(q) << std::endl;
+	std::cout << isBusinessDay(q) << std::endl;
+	std::cout << calcEndOfMonth(q) << std::endl;
+	std::cout << calcEndOfYear(q) << std::endl;
+
 
 
 

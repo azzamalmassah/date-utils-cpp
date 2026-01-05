@@ -1,5 +1,5 @@
 #pragma once
-
+#include <string>
 struct sDate {
     int day;
     int month;
@@ -22,6 +22,7 @@ void decreaseDateByXWeek(sDate& d, int weeks);
 void decreaseDateByOneMonth(sDate& d);
 void decreaseDateByXMonths(sDate& d, int months);
 
+
 // Year
 void decreaseDateByOneYear(sDate& d);
 void decreaseDateByXYearsFaster(sDate& d, int years);
@@ -31,4 +32,41 @@ void decreaseDateByOneDecade(sDate& d);
 void decreaseDateByXDecadesFaster(sDate& d, int decades);
 
 void decreaseDateByOneCentury(sDate& d);
+void decreaseDateByOneCenturyFaster(sDate& d);
 void decreaseDateByOneMillennium(sDate& d);
+// ==========================
+// Date addition (increase)
+// ==========================
+
+bool isLastDayInMonth(const sDate& d);
+bool isLastMonthInYear(const sDate& d);
+
+// Day
+void increaseDateByOneDay(sDate& d);
+void increaseDateByXDay(sDate& d, int daysToAdd);
+
+// Week
+void increaseDateByXWeek(sDate& d, int weeksToAdd = 1);
+
+// Month
+void increaseDateByXMonths(sDate& d, int monthsToAdd = 1);
+
+// Year
+void increaseDateByXYears(sDate& d, int yearsToAdd = 1);
+
+
+// ==========================
+// Date queries & calculations
+// ==========================
+
+int calculateIndex(int day, int month, int year);
+std::string dayName(short index);
+
+bool isWeekEnd(const sDate& d);
+bool isEndOfWeek(const sDate& d);
+bool isBusinessDay(const sDate& d);
+
+short daysUntilEndOfWeek(short dayIndex);
+short calcEndWeekDays(const sDate& d);
+short calcEndOfMonth(const sDate& d);
+int   calcEndOfYear(const sDate& d);
