@@ -1,55 +1,56 @@
-#  date-utils-cpp
-
-**A clean, lightweight C++ date utility library**
-
-`date-utils-cpp` is a reusable C++ utility library that provides **reliable date calculations** such as adding days, handling month/year rollovers, and leap year logic.
-The project is built with a **clean Visual Studio structure** and focuses on **correctness, readability, and extensibility**.
 
 ---
 
-##  Why This Project?
+````md
+# date-utils-cpp
 
-Working with dates is deceptively complex.
-This project was created to:
+A small, dependency-free C++ library for working with calendar dates.
 
-* Practice **real-world C++ problem solving**
-* Implement **robust date-handling logic**
-* Build a **reusable utility library**
-* Follow **professional GitHub & Visual Studio standards**
+This library provides simple and safe utilities for date subtraction, date addition, and common date queries, with correct handling of leap years and month/year boundaries.
 
 ---
 
-##  Key Features
+## Why This Project?
 
-*  Simple and clear `sDate` structure
-*  Add days to any date
-*  Calculate days from the beginning of the year
-*  Correct handling of:
+Working with dates is deceptively complex. This project was created to:
 
-  * Month boundaries
-  * Year changes
-  * Leap years
-*  Modular utility functions
-*  Easy to test and extend
+- Practice real-world C++ problem solving
+- Implement robust date-handling logic
+- Build a reusable utility library
+- Follow professional GitHub and Visual Studio standards
 
 ---
 
-## 🗂️ Project Structure
+## Key Features
 
-```
+- Simple and clear `sDate` structure
+- Add days to any date
+- Calculate days from the beginning of the year
+- Date subtraction (days → millennia)
+- Date addition (days → years)
+- Day-of-week calculation
+- Weekend and business-day checks
+- Remaining days in week, month, and year
+- Leap-year–safe logic
+
+---
+
+## Project Structure
+
+```text
 date-utils-cpp/
-│
 ├── src/
-│   ├── date_utils.h      # Date structures & declarations
-│   ├── date_utils.cpp    # Date utility implementations
-│   └── main.cpp          # Usage examples / testing
-│
+│   ├── date_utils.h     # Date structures & declarations
+│   ├── date_utils.cpp  # Date utility implementations
+│   └── main.cpp        # Usage examples / testing
 ├── date-utils-cpp.sln
 ├── .gitignore
 └── README.md
-```
+````
 
-## 🛠️ Tech Stack
+---
+
+## Tech Stack
 
 * **Language:** C++
 * **Standard:** C++17 (recommended)
@@ -58,24 +59,88 @@ date-utils-cpp/
 
 ---
 
-##  Example Usage
+## Usage Example
 
 ```cpp
-sDate today = { 1, 1, 2026 };
-sDate futureDate = addingDaysToDate(40, today);
+#include <iostream>
+#include "date_utils.h"
+
+int main() {
+    sDate d{29, 2, 2024};
+
+    decreaseDateByOneDay(d);
+    increaseDateByOneDay(d);
+
+    std::cout << dayName(calculateIndex(d.day, d.month, d.year)) << std::endl;
+    std::cout << "Weekend: " << isWeekEnd(d) << std::endl;
+    std::cout << "Days till end of month: " << calcEndOfMonth(d) << std::endl;
+}
 ```
 
-The function correctly:
+---
 
-* Moves across months
-* Updates the year if required
-* Accounts for leap years
+## Supported Operations
 
+### Date Subtraction
 
+* `decreaseDateByOneDay`
+* `decreaseDateByXDay`
+* `decreaseDateByOneWeek`
+* `decreaseDateByXWeek`
+* `decreaseDateByOneMonth`
+* `decreaseDateByXMonths`
+* `decreaseDateByOneYear`
+* `decreaseDateByXYearsFaster`
+* `decreaseDateByOneDecade`
+* `decreaseDateByXDecadesFaster`
+* `decreaseDateByOneCentury`
+* `decreaseDateByOneMillennium`
 
+### Date Addition
 
+* `increaseDateByOneDay`
+* `increaseDateByXDay`
+* `increaseDateByXWeek`
+* `increaseDateByXMonths`
+* `increaseDateByXYears`
 
+### Date Querying
 
+* `isWeekEnd`
+* `isBusinessDay`
+* `isEndOfWeek`
+* `calcEndWeekDays`
+* `calcEndOfMonth`
+* `calcEndOfYear`
+* `dayName`
+* `calculateIndex`
 
+---
 
+## Testing
+
+All functionality is demonstrated in `main.cpp` and covers:
+
+* Leap years
+* Month and year boundaries
+* Date addition and subtraction
+* Query correctness
+
+---
+
+## Requirements
+
+* C++17 or later
+* No third-party dependencies
+* Works with Visual Studio, GCC, and Clang
+
+---
+
+## License
+
+MIT License — free to use, modify, and distribute.
+
+````
+
+---
 
