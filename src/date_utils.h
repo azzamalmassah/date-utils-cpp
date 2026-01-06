@@ -65,8 +65,27 @@ std::string dayName(short index);
 bool isWeekEnd(const sDate& d);
 bool isEndOfWeek(const sDate& d);
 bool isBusinessDay(const sDate& d);
-
+sDate calculateVacationEndDate(sDate d, short vacationDays);
+short calculateVacationDays(sDate dateFrom, sDate dateTo);
 short daysUntilEndOfWeek(short dayIndex);
 short calcEndWeekDays(const sDate& d);
 short calcEndOfMonth(const sDate& d);
 int   calcEndOfYear(const sDate& d);
+
+enum enDateCompare { Before = -1, Equal = 0, After = 1 };
+bool isSameDate(const sDate& d1, const  sDate& d2);
+bool isDate1BeforeDate2(const sDate &d1, const sDate& d2);
+short compareDates(const sDate& d1, const sDate& d2);
+bool isDate1AfterDate2(const sDate& d1, const sDate& d2);
+
+// ==========================
+// Period utilities
+// ==========================
+
+struct sPeriod {
+    sDate periodStart;
+    sDate periodEnd;
+};
+
+bool isOverlap(const sPeriod& period1, const sPeriod& period2);
+

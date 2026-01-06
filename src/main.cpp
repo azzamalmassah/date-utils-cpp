@@ -45,6 +45,20 @@ int main()
 	std::cout << calcEndOfYear(q) << std::endl;
 
 
+	// Business / vacation tests
+	sDate from{ 1, 9, 2022 };
+	sDate to{ 5, 9, 2022 };   
+
+	std::cout << calculateVacationDays(from, to) << std::endl; 
+
+	sDate ret = calculateVacationEndDate({ 2, 9, 2022 }, 1);
+	std::cout << ret.day << "/" << ret.month << "/" << ret.year << std::endl; 
+
+	// Period overlap test
+	sPeriod p1{ {1,9,2022}, {5,9,2022} };
+	sPeriod p2{ {5,9,2022}, {10,9,2022} };
+
+	std::cout << isOverlap(p1, p2) << std::endl; 
 
 
 }

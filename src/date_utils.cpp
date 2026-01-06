@@ -217,6 +217,29 @@ bool isEndOfWeek(const sDate& d) {
 bool isBusinessDay(const sDate& d) {
 	return !isWeekEnd(d);
 }
+short calculateVacationDays(sDate dateFrom, sDate dateTo) {
+	short dayCounter = 0;
+	while (isDate1BeforeDate2(dateFrom, dateTo)) {
+		if (isBusinessDay(dateFrom)) {
+			dayCounter++;
+		}
+		 increaseDateByOneDay(dateFrom);
+	}
+	return dayCounter;
+}
+
+sDate calculateVacationEndDate(sDate d, short vacationDays) {
+	while (vacationDays > 0) {
+		increaseDateByOneDay(d);
+
+		if (!isWeekEnd(d)) {
+			vacationDays--;
+		}
+	}
+
+
+	return d;
+}
 short daysUntilEndOfWeek(short dayIndex) {
 	if (dayIndex >= 4) {
 		return 0;
@@ -239,8 +262,53 @@ int calcEndOfYear(const sDate& d) {
 	}
 	return totalDays - d.day;
 }
+// ==========================
+// Date comparison
+// ==========================
 
 
+bool isSameDate(const sDate& d1,const  sDate& d2) {
+	return d2.day == d1.day && d2.month == d1.month && d1.year == d2.year;
+}
+bool isDate1BeforeDate2(const sDate &d1, const sDate& d2) {
+	if (d2.year != d1.year) {
+		return d2.year > d1.year;
+	}
+	if (d2.month != d1.month) {
+		return d2.month > d1.month;
+	}
+
+	return d2.day > d1.day;
+
+}
+
+bool isDate1AfterDate2(const sDate& d1,const sDate& d2) {
+	return isDate1BeforeDate2(d2, d1);
+}
+short compareDates(const sDate& d1,const sDate& d2) {
+	if (isSameDate(d1, d2)) {
+		return enDateCompare::Equal;
+	}
+	else if (isDate1BeforeDate2(d1, d2)) {
+		return enDateCompare::Before;
+	}
+	else {
+		return enDateCompare::After;
+	}
+}
+
+
+
+// ==========================
+// Period utilities
+// ==========================
+
+
+bool isOverlap(const sPeriod& period1, const sPeriod& period2) {
+
+	return (compareDates(period1.periodStart, period2.periodEnd) != enDateCompare::After && compareDates(period1.periodEnd, period2.periodStart) != enDateCompare::Before);
+
+}
 /*
 ===============================================================================
 REFERENCE ONLY — NOT USED IN PRODUCTION
