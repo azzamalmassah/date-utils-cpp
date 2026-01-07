@@ -114,6 +114,25 @@ int main() {
 * `dayName`
 * `calculateIndex`
 
+
+### Date Comparison Utilities
+
+* `isSameDate`
+* `isDate1BeforeDate2`
+* `isDate1AfterDate2`
+* `compareDates`
+
+### Period Operations
+
+* `isOverlap`
+
+
+### Vacation & Business Day Calculations
+* `calculateVacationDays`
+* `calculateVacationEndDate`
+
+
+
 ---
 
 ## Testing
