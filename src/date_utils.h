@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include<vector>
 struct sDate {
     int day;
     int month;
@@ -58,7 +59,7 @@ void increaseDateByXYears(sDate& d, int yearsToAdd = 1);
 // ==========================
 // Date queries & calculations
 // ==========================
-
+int countDateDiff(sDate d1, sDate d2);
 int calculateIndex(int day, int month, int year);
 std::string dayName(short index);
 
@@ -89,3 +90,21 @@ struct sPeriod {
 
 bool isOverlap(const sPeriod& period1, const sPeriod& period2);
 
+int calculatePeriodLength(sPeriod period, bool includeEndDay = false);
+
+int countOverlapDays(sPeriod period1, sPeriod period2);
+
+bool checkIfDateOverlap(sDate period2Starting, sPeriod period1);
+
+// ==========================
+// Date validation
+// ==========================
+bool validateDate(const sDate& d);
+
+
+// ==========================
+// String & date conversion
+// ==========================
+std::vector <std::string> split(std::string str, std::string delim = "/");
+std::string convertstructDateToString(const sDate& Date);
+sDate convertStringDateToStructDate(std::string date, std::string dilim = "/");

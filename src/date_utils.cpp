@@ -1,4 +1,5 @@
 #include "date_utils.h"
+#include <vector>
 #include <string>
 
 bool isLeapYear(int year) {
@@ -188,6 +189,28 @@ void increaseDateByXYears(sDate& d, int yearsToAdd ) {
 // ==========================
 // Date queries & calculations
 // ==========================
+int countDateDiff(sDate d1, sDate d2) {
+	int counter = 0;
+	while (!isSameDate(d1, d2)) {
+
+		if (isDate1BeforeDate2(d1, d2)) {
+			counter++;
+
+
+			 increaseDateByOneDay(d1);
+
+		}
+		else {
+			counter++;
+
+
+			increaseDateByOneDay(d2);
+
+		}
+	}
+	return counter;
+}
+
 int calculateIndex(int day, int month, int year) {
 	short a, y, m;
 	a = (14 - month) / 12;
@@ -308,6 +331,99 @@ bool isOverlap(const sPeriod& period1, const sPeriod& period2) {
 
 	return (compareDates(period1.periodStart, period2.periodEnd) != enDateCompare::After && compareDates(period1.periodEnd, period2.periodStart) != enDateCompare::Before);
 
+}
+
+int calculatePeriodLength(sPeriod period, bool includeEndDay ) {
+	int days = countDateDiff(period.periodStart, period.periodEnd);
+	return includeEndDay ? days + 1 : days;
+	
+}
+
+int countOverlapDays(sPeriod period1, sPeriod period2) {
+	sDate overLapStarts;
+	sDate overlapEnds;
+	if (compareDates(period1.periodStart, period2.periodStart) == enDateCompare::After) {
+		overLapStarts = period1.periodStart;
+	}
+	else {
+		overLapStarts = period2.periodStart;
+	}
+
+	if (compareDates(period1.periodEnd, period2.periodEnd) == enDateCompare::Before) {
+		overlapEnds = period1.periodEnd;
+	}
+	else {
+		overlapEnds = period2.periodEnd;
+	}
+	if (compareDates(overLapStarts, overlapEnds) == enDateCompare::After)
+		return 0;
+	sPeriod overlapPeriod;
+	overlapPeriod.periodStart = overLapStarts;
+	overlapPeriod.periodEnd = overlapEnds;
+	return calculatePeriodLength(overlapPeriod);
+}
+
+bool checkIfDateOverlap(sDate period2Starting, sPeriod period1) {
+	sPeriod period2;
+	period2.periodStart = period2Starting;
+	period2.periodEnd = period2Starting;
+
+	return (isOverlap(period1, period2));
+}
+
+
+// ==========================
+// Date validation
+// ==========================
+bool validateDate(const sDate& d) {
+	int maxDay = 0;
+	if (d.month > 12 || d.month < 1) {
+
+		return false;
+	}
+	maxDay = numberOfDaysInMonthsShort(d.year, d.month);
+
+
+	if (d.day > maxDay || d.day < 1) {
+		return false;
+	}
+	return true;
+}
+
+// ==========================
+// String & Date conversion 
+// ==========================
+
+std::vector <std::string> split(std::string str, std::string delim ) {
+
+	size_t pos = 0;
+	std::string word = "";
+	std::vector<std::string> result;
+	while ((pos = str.find(delim)) != std::string::npos) {
+
+		result.push_back(str.substr(0, pos));
+		str.erase(0, pos + delim.length());
+	}
+	result.push_back(str);
+
+	return result;
+}
+
+std::string convertstructDateToString(const sDate& Date)
+{
+	return std::to_string(Date.day) + "/" + std::to_string(Date.month) +
+		"/" + std::to_string(Date.year);
+}
+
+
+sDate convertStringDateToStructDate(std::string date, std::string dilim ) {
+	std::vector<std::string>vString = split(date, dilim);
+
+	sDate d;
+	d.day = stoi(vString[0]);
+	d.month = stoi(vString[1]);
+	d.year = stoi(vString[2]);
+	return d;
 }
 /*
 ===============================================================================

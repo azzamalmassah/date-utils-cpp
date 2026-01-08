@@ -61,6 +61,60 @@ int main()
 	std::cout << isOverlap(p1, p2) << std::endl; 
 
 
+    // --------------------------
+    // Test 1: String <-> Date
+    // --------------------------
+    std::cout << "[Test 1] String <-> Date conversion\n";
+
+    sDate d1 = convertStringDateToStructDate("10/03/2024");
+    std::cout << "Day   : " << d1.day << "\n";
+    std::cout << "Month : " << d1.month << "\n";
+    std::cout << "Year  : " << d1.year << "\n";
+
+    std::cout << "Back to string: "
+        << convertstructDateToString(d1) << "\n\n";
+    
+    // --------------------------
+    // Test 2: Date validation
+    // --------------------------
+    std::cout << "[Test 2] Date validation\n";
+
+    sDate validDate{ 29, 2, 2024 };
+    sDate invalidDate{ 31, 2, 2023 };
+
+    std::cout << "29/2/2024 valid?   "
+        << (validateDate(validDate) ? "Yes" : "No") << "\n";
+
+    std::cout << "31/2/2023 valid?   "
+        << (validateDate(invalidDate) ? "Yes" : "No") << "\n\n";
+
+    // --------------------------
+    // Test 3: Period length
+    // --------------------------
+    std::cout << "[Test 3] Period length\n";
+
+    sPeriod period1{
+        { 1, 3, 2024 },
+        { 10, 3, 2024 }
+    };
+
+    std::cout << "Days between 1/3/2024 and 10/3/2024 (exclusive): "
+        << calculatePeriodLength(period1) << "\n";
+
+    std::cout << "Days between 1/3/2024 and 10/3/2024 (inclusive): "
+        << calculatePeriodLength(period1, true) << "\n\n";
+
+
+    // --------------------------
+    // Test 5: Single date overlap
+    // --------------------------
+    std::cout << "\n[Test 5] Single date overlap\n";
+
+    sDate checkDate{ 7, 3, 2024 };
+
+    std::cout << "Does 7/3/2024 overlap period 1/10 March? "  << (checkIfDateOverlap(checkDate, p1) ? "Yes" : "No") << "\n";
+
+    std::cout << "\n==== End of Tests ====\n";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
