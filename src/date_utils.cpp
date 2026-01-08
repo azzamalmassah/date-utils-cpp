@@ -425,6 +425,31 @@ sDate convertStringDateToStructDate(std::string date, std::string dilim ) {
 	d.year = stoi(vString[2]);
 	return d;
 }
+
+// ==========================
+// Date Formatting
+// ==========================
+std::string replaceWordInString(std::string& s1, std::string stringToReplace, std::string sRepalceTo) {
+	size_t pos = s1.find(stringToReplace);
+	while (pos != std::string::npos)
+	{
+		s1 = s1.replace(pos, stringToReplace.length(), sRepalceTo);
+		pos = s1.find(stringToReplace);
+	}
+	return s1;
+}
+
+std::string formatDate(const sDate& d, std::string format) {
+
+	replaceWordInString(format, "dd", std::to_string(d.day));
+	replaceWordInString(format, "mm", std::to_string(d.month));
+	replaceWordInString(format, "yyyy", std::to_string(d.year));
+	return format;
+
+}
+
+
+
 /*
 ===============================================================================
 REFERENCE ONLY — NOT USED IN PRODUCTION

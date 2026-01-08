@@ -62,7 +62,7 @@ int main()
 
 
     // --------------------------
-    // Test 1: String <-> Date
+    // Test : String <-> Date
     // --------------------------
     std::cout << "[Test 1] String <-> Date conversion\n";
 
@@ -75,7 +75,7 @@ int main()
         << convertstructDateToString(d1) << "\n\n";
     
     // --------------------------
-    // Test 2: Date validation
+    // Test : Date validation
     // --------------------------
     std::cout << "[Test 2] Date validation\n";
 
@@ -89,7 +89,7 @@ int main()
         << (validateDate(invalidDate) ? "Yes" : "No") << "\n\n";
 
     // --------------------------
-    // Test 3: Period length
+    // Test : Period length
     // --------------------------
     std::cout << "[Test 3] Period length\n";
 
@@ -106,7 +106,7 @@ int main()
 
 
     // --------------------------
-    // Test 5: Single date overlap
+    // Test : Single date overlap
     // --------------------------
     std::cout << "\n[Test 5] Single date overlap\n";
 
@@ -114,8 +114,22 @@ int main()
 
     std::cout << "Does 7/3/2024 overlap period 1/10 March? "  << (checkIfDateOverlap(checkDate, p1) ? "Yes" : "No") << "\n";
 
+
+
+    // ==========================
+    //  Test Date Formatting
+    // ==========================
+
+    std::string date = "13/12/2025";
+    sDate dateToFormat = convertStringDateToStructDate(date, "/");
+
+    std::cout << "\n" << formatDate(dateToFormat, "mm/dd/yyyy") << "\n";
+    std::cout << "\n" << formatDate(dateToFormat, "mm-dd-yyyy") << "\n";
+    std::cout << "\n" << formatDate(dateToFormat, "dd-mm-yyyy") << "\n";
+    std::cout << "\n" << formatDate(dateToFormat, "Day:dd, Month:mm,Year:yyyy") << "\n";
     std::cout << "\n==== End of Tests ====\n";
 }
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

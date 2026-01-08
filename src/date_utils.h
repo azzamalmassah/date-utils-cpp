@@ -108,3 +108,12 @@ bool validateDate(const sDate& d);
 std::vector <std::string> split(std::string str, std::string delim = "/");
 std::string convertstructDateToString(const sDate& Date);
 sDate convertStringDateToStructDate(std::string date, std::string dilim = "/");
+
+
+// ==========================
+// Date Formatting
+// ==========================
+
+std::string replaceWordInString(std::string& s1, std::string stringToReplace, std::string sRepalceTo);
+
+std::string formatDate(const sDate& d, std::string format = "dd/mm/yyyy");
